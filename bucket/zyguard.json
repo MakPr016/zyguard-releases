@@ -1,7 +1,7 @@
 {
     "version": "0.1.0-beta.1",
     "description": "A from-scratch, GPU-accelerated (wgpu/Vulkan) local inference engine and TUI chat client for the LFM2.5 model family.",
-    "homepage": "https://github.com/MakPr016/zyguard-releases",
+    "homepage": "https://github.com/MakPr016/Zyguard",
     "license": "MIT",
     "url": "https://github.com/MakPr016/zyguard-releases/releases/download/v0.1.0-beta.1/zyguard-windows-x64.zip",
     "hash": "b366d0d1d0a543a22998665b460c52d4bc3bca88488ce897be5ce87b378f5d03",
