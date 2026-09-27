@@ -1,18 +1,18 @@
 {
-    "version": "0.1.0-beta.1",
-    "description": "A from-scratch, GPU-accelerated (wgpu/Vulkan) local inference engine and TUI chat client for the LFM2.5 model family.",
-    "homepage": "https://github.com/MakPr016/Zyguard",
-    "license": "MIT",
-    "url": "https://github.com/MakPr016/zyguard-releases/releases/download/v0.1.0-beta.1/zyguard-windows-x64.zip",
-    "hash": "b366d0d1d0a543a22998665b460c52d4bc3bca88488ce897be5ce87b378f5d03",
-    "bin": [
-        "zyguard.exe",
-        "zyguard-tui.exe"
-    ],
-    "checkver": {
-        "github": "https://github.com/MakPr016/zyguard-releases"
-    },
-    "autoupdate": {
-        "url": "https://github.com/MakPr016/zyguard-releases/releases/download/v$version/zyguard-windows-x64.zip"
-    }
+    "version":  "0.1.0-beta.2",
+    "description":  "A from-scratch, GPU-accelerated (wgpu/Vulkan) local inference engine and TUI chat client for the LFM2.5 model family.",
+    "homepage":  "https://github.com/MakPr016/Zyguard",
+    "license":  "MIT",
+    "url":  "https://github.com/MakPr016/zyguard-releases/releases/download/v0.1.0-beta.2/zyguard-windows-x64.zip",
+    "hash":  "b4f6075639751b24e9df422df16c01587e05179df0873dbf6953c1f4eb0075a0",
+    "bin":  [
+                "zyguard.exe",
+                "zyguard-tui.exe"
+            ],
+    "checkver":  {
+                     "github":  "https://github.com/MakPr016/zyguard-releases"
+                 },
+    "autoupdate":  {
+                       "url":  "https://github.com/MakPr016/zyguard-releases/releases/download/v$version/zyguard-windows-x64.zip"
+                   }
 }
