@@ -4,10 +4,11 @@
     "homepage":  "https://github.com/MakPr016/Zyguard",
     "license":  "MIT",
     "url":  "https://github.com/MakPr016/zyguard-releases/releases/download/v0.1.0-beta.2.5/zyguard-windows-x64.zip",
-    "hash":  "48055b65905cd8da59c7d8c753b5c903a0b006558c5629845e6792194d5e17d6",
+    "hash":  "97662a8d66662e5dc6559bff42469cc72eb1646d8fc9f29b3b8314f82046a3c7",
     "bin":  [
                 "zyguard.exe",
-                "zyguard-tui.exe"
+                "zyguard-tui.exe",
+                "zyguard-server.exe"
             ],
     "checkver":  {
                      "github":  "https://github.com/MakPr016/zyguard-releases"

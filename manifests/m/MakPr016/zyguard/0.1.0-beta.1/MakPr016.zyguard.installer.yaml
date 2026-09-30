@@ -17,6 +17,6 @@ UpgradeBehavior: install
 Installers:
   - Architecture: x64
     InstallerUrl: https://github.com/MakPr016/zyguard-releases/releases/download/v0.1.0-beta.2.5/zyguard-setup-0.1.0-beta.2.5.exe
-    InstallerSha256: cbbd3d0214a69680e54bd39520adc31095bd82c0cb20f4b7f63b42be170e98a6
+    InstallerSha256: 58186337533f3047a8669bbc041bde1cc95de51e68da47b2ee2b96541b8876c0
 ManifestType: installer
 ManifestVersion: 1.12.0
