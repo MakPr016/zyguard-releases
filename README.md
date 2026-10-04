@@ -7,7 +7,18 @@ _____                                    __
      ╱____╱╱____╱
 ```
 
-Zyguard is a from-scratch LLM inference engine written in Rust, running entirely on Vulkan compute shaders via `wgpu` — no OpenVINO, no llama.cpp, no CUDA. Every kernel (matrix-vector multiply, normalization, rotary embeddings, the causal convolution, attention) is hand-written WGSL, verified against Hugging Face `transformers`. It ships a terminal chat UI (`zyguard-tui`) and a CLI (`zyguard`), both able to download and run [LiquidAI's LFM2.5](https://huggingface.co/LiquidAI/LFM2.5-350M) models (350M or 2.6B) locally on your GPU. Currently Windows-only, built and validated on an Intel Arc 140V, where the 2.6B model decodes at ~28 tok/s in Q8_0.
+Zyguard is a from-scratch LLM inference engine written in Rust, running entirely on Vulkan compute shaders via `wgpu` — no OpenVINO, no llama.cpp, no CUDA. Every kernel (matrix-vector multiply, normalization, rotary embeddings, the causal convolution, attention) is hand-written WGSL, verified against Hugging Face `transformers`. It ships a terminal chat UI (`zyguard-tui`), a CLI (`zyguard`) and a local HTTP API server (`zyguard-server`), which download and run these models locally on your GPU:
+
+| Model | Download | On disk |
+| --- | --- | --- |
+| [LFM2.5-350M](https://huggingface.co/LiquidAI/LFM2.5-350M) (recommended) | 0.7 GB | 1.1 GB |
+| [LFM2.5-350M-Thinking](https://huggingface.co/KoarAI/LFM2.5-350M-Thinking) | 0.7 GB | 1.1 GB |
+| [LFM2.5-1.2B-Instruct](https://huggingface.co/LiquidAI/LFM2.5-1.2B-Instruct) | 2.3 GB | 3.7 GB |
+| [LFM2.5-2.6B](https://huggingface.co/LiquidAI/LFM2.5-2.6B) | 5.4 GB | 8.4 GB |
+| [Gemma 4 E2B (instruct)](https://huggingface.co/ggml-org/gemma-4-E2B-it-GGUF) | 5 GB | 5.3 GB |
+| [Spark-X2.5-4B](https://huggingface.co/XHToken/Spark-X2.5-4B) | 8 GB | 5.3 GB |
+
+Pick one from **+ Download a model** in `zyguard-tui`; it is downloaded, converted and loaded automatically (`o` opens the models folder). `zyguard launch claude` runs Claude Code against a local model. Currently Windows-only, built and validated on an Intel Arc 140V, where the 2.6B model decodes at ~28 tok/s in Q8_0.
 
 ## About this repo
 
@@ -15,11 +26,21 @@ This repo hosts **compiled releases and issue tracking only** — the source cod
 
 ## Install
 
-This is the `v0.1.0-beta.1` pre-release.
+The current release is the `v0.1.0-beta.2.7` pre-release ([release notes](https://github.com/MakPr016/zyguard-releases/releases/tag/v0.1.0-beta.2.7)).
 
-**Windows installer:**
+**One command (recommended):**
 
-Download [`zyguard-setup-0.1.0-beta.1.exe`](https://github.com/MakPr016/zyguard-releases/releases/download/v0.1.0-beta.1/zyguard-setup-0.1.0-beta.1.exe) from the [latest release](https://github.com/MakPr016/zyguard-releases/releases/tag/v0.1.0-beta.1) and run it. Installs both binaries, adds a Start Menu shortcut, and offers to add `zyguard` to your PATH.
+```powershell
+irm https://raw.githubusercontent.com/MakPr016/zyguard-releases/main/install.ps1 | iex
+```
+
+or from `cmd.exe` with `curl`:
+
+```bat
+curl -fsSL https://raw.githubusercontent.com/MakPr016/zyguard-releases/main/install.ps1 -o "%TEMP%\zyguard-install.ps1" && powershell -NoProfile -ExecutionPolicy Bypass -File "%TEMP%\zyguard-install.ps1"
+```
+
+Installs `zyguard`, `zyguard-tui` and `zyguard-server` from the newest release into `%LOCALAPPDATA%\Programs\zyguard` and adds that folder to your user PATH (open a new terminal afterwards). The download is checked against the SHA-256 GitHub records for it before anything is unpacked. Run it again to upgrade. Set `ZYGUARD_VERSION=0.1.0-beta.2.7` to install a specific release, or `ZYGUARD_INSTALL_DIR` to install somewhere else. [`install.ps1`](install.ps1) is in this repo if you want to read it first.
 
 **Scoop:**
 
@@ -28,11 +49,7 @@ scoop bucket add zyguard https://github.com/MakPr016/zyguard-releases
 scoop install zyguard
 ```
 
-**Cargo:**
-
-```powershell
-cargo install zyguard --version 0.1.0-beta.1
-```
+**Windows installer:** the older [`zyguard-setup-0.1.0-beta.1.exe`](https://github.com/MakPr016/zyguard-releases/releases/download/v0.1.0-beta.1/zyguard-setup-0.1.0-beta.1.exe) is still available; newer releases ship as a zip only, so prefer one of the options above.
 
 **winget:**
 
@@ -49,7 +66,7 @@ Real, current caveats — worth reading before you install:
 - **No `--version` flag** on either binary yet.
 - **winget isn't live yet** — see Install above.
 - Model-specific: LFM2.5-350M's plain greedy decode reliably collapses into repeated tokens (e.g. `"TheTheThe..."`) after a handful of steps — this is the *model's* documented behavior (matches Hugging Face `transformers` bit-for-bit), not a bug in this engine. `--repeat-penalty`/`--no-repeat-ngram-size` avoids it.
-- Tool calling is CPU-only and adds meaningful latency (~5-6s more time-to-first-token on the 2.6B) — left off by default for this reason.
+- Tool calling adds its schemas to the prompt: with every tool group on, the first message of a conversation takes ~5-9 s longer to start on the 2.6B (later messages reuse the processed prompt). Left off by default for this reason; `--tools web` etc. keeps it smaller.
 
 ## Reporting issues
 
