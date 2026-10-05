@@ -12,7 +12,7 @@
 # in place.
 #
 # Optional environment variables:
-#   ZYGUARD_VERSION       a release to install instead of the newest (0.1.0-beta.2.7)
+#   ZYGUARD_VERSION       a release to install instead of the newest (0.1.0-beta.2.8)
 #   ZYGUARD_INSTALL_DIR   where to install instead of ~/.local/bin
 #   GITHUB_TOKEN          used for the API lookup if set (avoids the 60/hour anonymous limit)
 #

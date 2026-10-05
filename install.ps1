@@ -21,7 +21,7 @@
     that folder to the user PATH; running it again upgrades in place.
 
     Optional environment variables:
-        ZYGUARD_VERSION       a release to install instead of the newest (0.1.0-beta.2.7)
+        ZYGUARD_VERSION       a release to install instead of the newest (0.1.0-beta.2.8)
         ZYGUARD_INSTALL_DIR   where to install instead of the default folder
         ZYGUARD_NO_MODIFY_PATH=1  leave the user PATH alone
 

@@ -26,7 +26,7 @@ This repo hosts **compiled releases and issue tracking only** — the source cod
 
 ## Install
 
-The current release is the `v0.1.0-beta.2.7` pre-release ([release notes](https://github.com/MakPr016/zyguard-releases/releases/tag/v0.1.0-beta.2.7)).
+The current release is the `v0.1.0-beta.2.8` pre-release ([release notes](https://github.com/MakPr016/zyguard-releases/releases/tag/v0.1.0-beta.2.8)).
 
 **One command (recommended):**
 
@@ -40,7 +40,7 @@ or from `cmd.exe` with `curl`:
 curl -fsSL https://raw.githubusercontent.com/MakPr016/zyguard-releases/main/install.ps1 -o "%TEMP%\zyguard-install.ps1" && powershell -NoProfile -ExecutionPolicy Bypass -File "%TEMP%\zyguard-install.ps1"
 ```
 
-Installs `zyguard`, `zyguard-tui` and `zyguard-server` from the newest release into `%LOCALAPPDATA%\Programs\zyguard` and adds that folder to your user PATH (open a new terminal afterwards). The download is checked against the SHA-256 GitHub records for it before anything is unpacked. Run it again to upgrade. Set `ZYGUARD_VERSION=0.1.0-beta.2.7` to install a specific release, or `ZYGUARD_INSTALL_DIR` to install somewhere else. [`install.ps1`](install.ps1) is in this repo if you want to read it first.
+Installs `zyguard`, `zyguard-tui` and `zyguard-server` from the newest release into `%LOCALAPPDATA%\Programs\zyguard` and adds that folder to your user PATH (open a new terminal afterwards). The download is checked against the SHA-256 GitHub records for it before anything is unpacked. Run it again to upgrade. Set `ZYGUARD_VERSION=0.1.0-beta.2.8` to install a specific release, or `ZYGUARD_INSTALL_DIR` to install somewhere else. [`install.ps1`](install.ps1) is in this repo if you want to read it first.
 
 **Linux** (x86_64 or aarch64, glibc 2.28+: Amazon Linux 2023, Ubuntu 20.04+, Debian 10+, RHEL 8+):
 
