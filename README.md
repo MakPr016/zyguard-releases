@@ -18,7 +18,7 @@ Zyguard is a from-scratch LLM inference engine written in Rust, running entirely
 | [Gemma 4 E2B (instruct)](https://huggingface.co/ggml-org/gemma-4-E2B-it-GGUF) | 5 GB | 5.3 GB |
 | [Spark-X2.5-4B](https://huggingface.co/XHToken/Spark-X2.5-4B) | 8 GB | 5.3 GB |
 
-Pick one from **+ Download a model** in `zyguard-tui`; it is downloaded, converted and loaded automatically (`o` opens the models folder). `zyguard launch claude` runs Claude Code against a local model. Currently Windows-only, built and validated on an Intel Arc 140V, where the 2.6B model decodes at ~28 tok/s in Q8_0.
+Pick one from **+ Download a model** in `zyguard-tui`; it is downloaded, converted and loaded automatically (`o` opens the models folder). `zyguard launch claude` runs Claude Code against a local model. Runs on Windows and Linux; built and validated on an Intel Arc 140V, where the 2.6B model decodes at ~28 tok/s in Q8_0.
 
 ## About this repo
 
@@ -42,6 +42,14 @@ curl -fsSL https://raw.githubusercontent.com/MakPr016/zyguard-releases/main/inst
 
 Installs `zyguard`, `zyguard-tui` and `zyguard-server` from the newest release into `%LOCALAPPDATA%\Programs\zyguard` and adds that folder to your user PATH (open a new terminal afterwards). The download is checked against the SHA-256 GitHub records for it before anything is unpacked. Run it again to upgrade. Set `ZYGUARD_VERSION=0.1.0-beta.2.7` to install a specific release, or `ZYGUARD_INSTALL_DIR` to install somewhere else. [`install.ps1`](install.ps1) is in this repo if you want to read it first.
 
+**Linux** (x86_64 or aarch64, glibc 2.28+: Amazon Linux 2023, Ubuntu 20.04+, Debian 10+, RHEL 8+):
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/MakPr016/zyguard-releases/main/install.sh | sh
+```
+
+Installs the same three programs into `~/.local/bin`, with the same SHA-256 check and the same `ZYGUARD_VERSION` / `ZYGUARD_INSTALL_DIR` variables ([`install.sh`](install.sh)). You also need the Vulkan loader and a GPU driver: `sudo apt install libvulkan1 mesa-vulkan-drivers` (Debian/Ubuntu) or `sudo dnf install vulkan-loader mesa-vulkan-drivers` (Amazon Linux/Fedora); on NVIDIA machines the NVIDIA driver provides Vulkan. Models are stored in `~/.local/share/zyguard/models`. On a headless server, run `zyguard-server` for the HTTP API.
+
 **Scoop:**
 
 ```powershell
@@ -59,7 +67,8 @@ Public submission to `microsoft/winget-pkgs` is pending — `winget install zygu
 
 Real, current caveats — worth reading before you install:
 
-- **Windows only.** No macOS/Linux build.
+- **Linux builds are new and GPU-untested.** They start and find their folders on Amazon Linux 2023 and Ubuntu 20.04, but no model has been run on a Linux GPU yet, NVIDIA included. No macOS build.
+- **A GPU is required.** Software Vulkan (Mesa's llvmpipe) is below the engine's 512 MiB storage-buffer minimum, so CPU-only machines are rejected at start-up.
 - **Validated hardware is narrow.** Built and measured on an Intel Arc 140V (Lunar Lake iGPU). The pre-flight check will accept other Vulkan-capable GPUs that meet its requirements, but warns on anything other than Intel Arc since nothing else has been run for real.
 - **Subgroup widths ≥ 64 lanes are logically covered but not run on real silicon.** Every reduction kernel is written to be correct for any subgroup size, and this was checked on hardware down to 4-lane and up to 32-lane subgroups plus a synthetic 64-lane-equivalent test — but no actual 64-lane hardware (AMD wave64, Qualcomm) has run this code.
 - **Cross-drive model migration is mock-tested, not hardware-tested.** If your existing models folder and `%LOCALAPPDATA%` are on different drives, the one-time migration falls back to a copy instead of an instant rename. If it fails partway, your original folder is left untouched — nothing is deleted until the copy is verified complete.

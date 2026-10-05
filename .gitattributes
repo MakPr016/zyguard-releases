@@ -1,0 +1,2 @@
+# install.sh is piped into sh on Linux; CRLF breaks it.
+*.sh text eol=lf
